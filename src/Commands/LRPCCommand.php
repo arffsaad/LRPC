@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace ArffSaad\LRPC\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class LRPCCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'lrpc';
 
     public $description = 'My command';
 
