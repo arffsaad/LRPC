@@ -4,11 +4,11 @@ namespace ArffSaad\LRPC\Commands;
 
 use Illuminate\Console\Command;
 
-class LRPCCommand extends Command
+class MakeRPC extends Command
 {
-    public $signature = 'lrpc';
+    public $signature = 'make:lrpc';
 
-    public $description = 'My command';
+    public $description = 'Create a new RPC class.';
 
     public function handle(): int
     {

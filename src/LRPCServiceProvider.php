@@ -4,7 +4,8 @@ namespace ArffSaad\LRPC;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use ArffSaad\LRPC\Commands\LRPCCommand;
+use ArffSaad\LRPC\Commands\LRPCSync;
+use ArffSaad\LRPC\Commands\MakeRPC;
 
 class LRPCServiceProvider extends PackageServiceProvider
 {
@@ -18,8 +19,7 @@ class LRPCServiceProvider extends PackageServiceProvider
         $package
             ->name('lrpc')
             ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_lrpc_table')
-            ->hasCommand(LRPCCommand::class);
+            ->hasCommand(LRPCSync::class)
+            ->hasCommand(MakeRPC::class);
     }
 }
