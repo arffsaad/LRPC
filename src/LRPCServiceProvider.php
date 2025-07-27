@@ -2,10 +2,10 @@
 
 namespace ArffSaad\LRPC;
 
-use Spatie\LaravelPackageTools\Package;
-use Spatie\LaravelPackageTools\PackageServiceProvider;
 use ArffSaad\LRPC\Commands\LRPCSync;
 use ArffSaad\LRPC\Commands\MakeRPC;
+use Spatie\LaravelPackageTools\Package;
+use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class LRPCServiceProvider extends PackageServiceProvider
 {

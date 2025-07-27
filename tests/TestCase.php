@@ -2,9 +2,9 @@
 
 namespace ArffSaad\LRPC\Tests;
 
+use ArffSaad\LRPC\LRPCServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use ArffSaad\LRPC\LRPCServiceProvider;
 
 class TestCase extends Orchestra
 {
