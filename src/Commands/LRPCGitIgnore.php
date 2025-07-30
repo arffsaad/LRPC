@@ -4,7 +4,6 @@ namespace ArffSaad\LRPC\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 
 class LRPCGitIgnore extends Command
 {
@@ -16,8 +15,9 @@ class LRPCGitIgnore extends Command
     {
         $gitignorePath = base_path('.gitignore');
 
-        if (!File::exists($gitignorePath)) {
+        if (! File::exists($gitignorePath)) {
             $this->warn('.gitignore file not found. Skipping gitignore update.');
+
             return;
         }
 
@@ -25,19 +25,19 @@ class LRPCGitIgnore extends Command
         $externalNamespace = config('lrpc.namespaces.external');
 
         // Convert namespace to file path
-        $internalPath = '/' . str_replace('\\', '/', $internalNamespace);
-        $externalPath = '/' . str_replace('\\', '/', $externalNamespace);
+        $internalPath = '/'.str_replace('\\', '/', $internalNamespace);
+        $externalPath = '/'.str_replace('\\', '/', $externalNamespace);
 
         $rules = [
-            $externalPath . '/',
-            $internalPath . '/.metadata.json',
+            $externalPath.'/',
+            $internalPath.'/.metadata.json',
         ];
 
         $current = File::get($gitignorePath);
 
         foreach ($rules as $rule) {
-            if (!str_contains($current, $rule)) {
-                File::append($gitignorePath, PHP_EOL . $rule);
+            if (! str_contains($current, $rule)) {
+                File::append($gitignorePath, PHP_EOL.$rule);
             }
         }
     }
