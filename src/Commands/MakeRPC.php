@@ -34,18 +34,18 @@ class MakeRPC extends Command
         File::ensureDirectoryExists($dataPath);
 
         // Generate files from stubs
-        $this->generateFromStub(__DIR__ . '/../../stubs/internal.stub', $procedureClass, [
+        $this->generateFromStub(__DIR__.'/../../stubs/internal.stub', $procedureClass, [
             '{{ namespace }}' => $internalNamespace,
             '{{ class }}' => $name,
         ]);
 
-        $this->generateFromStub(__DIR__ . '/../../stubs/dto.stub', $requestClass, [
+        $this->generateFromStub(__DIR__.'/../../stubs/dto.stub', $requestClass, [
             '{{ namespace }}' => $dataNamespace,
             '{{ class }}' => "{$name}Request",
             '{{ properties }}' => $this->generateDtoConstructor($requestFields),
         ]);
 
-        $this->generateFromStub(__DIR__ . '/../../stubs/dto.stub', $responseClass, [
+        $this->generateFromStub(__DIR__.'/../../stubs/dto.stub', $responseClass, [
             '{{ namespace }}' => $dataNamespace,
             '{{ class }}' => "{$name}Response",
             '{{ properties }}' => $this->generateDtoConstructor($responseFields),
@@ -56,7 +56,7 @@ class MakeRPC extends Command
         $this->line('Request fields');
         $this->table(
             ['Name', 'Type', 'Nullable'],
-            collect($requestFields)->map(fn($field) => [
+            collect($requestFields)->map(fn ($field) => [
                 $field['name'],
                 $field['type'],
                 $field['nullable'] ? 'Yes' : 'No',
@@ -66,7 +66,7 @@ class MakeRPC extends Command
         $this->line('Response fields');
         $this->table(
             ['Name', 'Type', 'Nullable'],
-            collect($responseFields)->map(fn($field) => [
+            collect($responseFields)->map(fn ($field) => [
                 $field['name'],
                 $field['type'],
                 $field['nullable'] ? 'Yes' : 'No',
@@ -100,8 +100,9 @@ class MakeRPC extends Command
             if (empty($name)) {
                 break;
             }
-            if (!preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $name)) {
+            if (! preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $name)) {
                 $this->error("Invalid parameter name '$name'. Must be a valid PHP variable name.");
+
                 continue;
             }
 
