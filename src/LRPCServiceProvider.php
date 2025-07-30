@@ -28,7 +28,7 @@ class LRPCServiceProvider extends PackageServiceProvider
 
         // Make config available even if not published
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/lrpc.php',
+            __DIR__.'/../config/lrpc.php',
             'lrpc'
         );
     }

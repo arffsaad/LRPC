@@ -16,10 +16,10 @@ return [
     |--------------------------------------------------------------------------
     */
     'services' => [
-    //     'OrdersService' => [
-    //         'url' => env('ORDERS_SERVICE_URL'),
-    //         'auth' => null, // optional: could be an API key, token, etc.
-    //     ],
+        //     'OrdersService' => [
+        //         'url' => env('ORDERS_SERVICE_URL'),
+        //         'auth' => null, // optional: could be an API key, token, etc.
+        //     ],
     ],
 
     /*
