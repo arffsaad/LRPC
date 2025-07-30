@@ -39,13 +39,13 @@ class MakeRPC extends Command
             '{{ class }}' => $name,
         ]);
 
-        $this->generateFromStub(__DIR__.'/../../stubs/request-dto.stub', $requestClass, [
+        $this->generateFromStub(__DIR__.'/../../stubs/dto.stub', $requestClass, [
             '{{ namespace }}' => $dataNamespace,
             '{{ class }}' => "{$name}Request",
             '{{ properties }}' => $this->generateDtoConstructor($requestFields),
         ]);
 
-        $this->generateFromStub(__DIR__.'/../../stubs/response-dto.stub', $responseClass, [
+        $this->generateFromStub(__DIR__.'/../../stubs/dto.stub', $responseClass, [
             '{{ namespace }}' => $dataNamespace,
             '{{ class }}' => "{$name}Response",
             '{{ properties }}' => $this->generateDtoConstructor($responseFields),
