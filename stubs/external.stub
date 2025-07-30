@@ -1,0 +1,23 @@
+<?php
+
+namespace {{ namespace }};
+
+use Lrpc\Support\BaseProcedure;
+use {{ internalNamespace }}\Data\{{ class }}Request;
+use {{ internalNamespace }}\Data\{{ class }}Response;
+use Spatie\LaravelData\Data;
+
+class {{ class }} extends BaseProcedure
+{
+    protected static string $service = '{{ serviceName }}';
+
+    protected static function requestType(): string
+    {
+        return {{ class }}Request::class;
+    }
+
+    protected static function responseType(): string
+    {
+        return {{ class }}Response::class;
+    }
+}

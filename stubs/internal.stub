@@ -1,0 +1,34 @@
+<?php
+
+namespace {{ namespace }};
+
+use Lrpc\Support\BaseProcedure;
+use {{ namespace }}\Data\{{ class }}Request;
+use {{ namespace }}\Data\{{ class }}Response;
+use Spatie\LaravelData\Data;
+
+class {{ class }} extends BaseProcedure
+{
+    protected static function requestType(): string
+    {
+        return {{ class }}Request::class;
+    }
+
+    protected static function responseType(): string
+    {
+        return {{ class }}Response::class;
+    }
+
+    protected static function process(Data $request): Data
+    {
+        /** @var {{ class }}Request $request */
+
+        // Implement your logic here...
+
+        // Once Completed, return your response here...
+        // Please comply to your DTOs. Keep it type safe =)
+        return new {{ class }}Response(
+            // Data...
+        );
+    }
+}
