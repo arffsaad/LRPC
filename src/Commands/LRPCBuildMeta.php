@@ -45,6 +45,7 @@ class LRPCBuildMeta extends Command
             $body = [
                 'request' => $request,
                 'response' => $response,
+                'description' => $ref->getMethod('desc')->invoke($ref->newInstance()),
             ];
 
             $procedures[$procedureName] = array_merge($body, [

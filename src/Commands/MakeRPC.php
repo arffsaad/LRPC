@@ -78,6 +78,9 @@ class MakeRPC extends Command
         $this->line("🔗 Procedure: $procedureClass");
         $this->line("🔗 Request DTO: $requestClass");
         $this->line("🔗 Response DTO: $responseClass");
+
+        $this->info('(re)Building metadata...');
+        $this->call('lrpc:build-meta');
     }
 
     protected array $availableTypes = [

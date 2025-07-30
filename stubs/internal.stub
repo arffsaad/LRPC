@@ -15,6 +15,11 @@ use Spatie\LaravelData\Data;
  */
 class {{ class }} extends BaseProcedure
 {
+    public static function desc()
+    {
+        return '{{ description }}';
+    }
+    
     protected static function requestType(): string
     {
         return {{ class }}Request::class;
