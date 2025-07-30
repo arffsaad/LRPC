@@ -32,7 +32,7 @@ class LRPCServiceProvider extends PackageServiceProvider
     {
         // Publish config file on install
         $this->publishes([
-            __DIR__ . '/../config/lrpc.php' => config_path('lrpc.php'),
+            __DIR__.'/../config/lrpc.php' => config_path('lrpc.php'),
         ], 'lrpc-config');
     }
 }
