@@ -81,6 +81,8 @@ class MakeRPC extends Command
 
         $this->info('(re)Building metadata...');
         $this->call('lrpc:build-meta');
+
+        $this->call('lrpc:gitignore');
     }
 
     protected array $availableTypes = [

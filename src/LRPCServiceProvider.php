@@ -3,6 +3,7 @@
 namespace ArffSaad\LRPC;
 
 use ArffSaad\LRPC\Commands\LRPCBuildMeta;
+use ArffSaad\LRPC\Commands\LRPCGitIgnore;
 use ArffSaad\LRPC\Commands\LRPCSync;
 use ArffSaad\LRPC\Commands\MakeRPC;
 use Spatie\LaravelPackageTools\Package;
@@ -19,6 +20,7 @@ class LRPCServiceProvider extends PackageServiceProvider
                 LRPCSync::class,
                 MakeRPC::class,
                 LRPCBuildMeta::class,
+                LRPCGitIgnore::class,
             ]);
     }
 
