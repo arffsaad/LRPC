@@ -4,26 +4,25 @@ namespace ArffSaad\LRPC\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionNamedType;
 
 class LRPCBuildMeta extends Command
 {
     protected $signature = 'lrpc:build-meta {--dry-run}';
-
     protected $description = 'Build metadata file for all internal LRPC procedures';
 
     public function handle()
     {
         $internalNamespace = config('lrpc.namespaces.internal', 'App\\Lrpc\\Internal');
-        $internalPath = base_path(str_replace('\\', '/', Str::after($internalNamespace, 'App\\')));
+        $internalPath = base_path(str_replace('\\', '/', $internalNamespace));
 
-        $metadata = [];
+        $procedures = [];
 
-        foreach (File::allFiles($internalPath) as $file) {
-            $className = $internalNamespace.'\\'.$file->getBasename('.php');
+        $this->info("Scanning for procedures in: {$internalPath}");
 
+        foreach (File::files($internalPath) as $file) {
+            $className = $internalNamespace . '\\' . $file->getBasename('.php');
             if (! class_exists($className)) {
                 continue;
             }
@@ -33,26 +32,31 @@ class LRPCBuildMeta extends Command
                 continue;
             }
 
-            $instance = app($className);
             $procedureName = $ref->getShortName();
+            $this->info("Processing procedure: {$procedureName}");
 
-            $requestDto = $ref->getMethod('handle')->getParameters()[0]->getType()->getName();
-            $responseDto = $ref->getMethod('handle')->getReturnType()->getName();
+            $requestDto = $ref->getMethod('requestType')->invoke($ref->newInstance());
+            $responseDto = $ref->getMethod('responseType')->invoke($ref->newInstance());
 
-            $metadata[$procedureName] = [
-                'request' => $this->extractDtoStructure($requestDto),
-                'response' => $this->extractDtoStructure($responseDto),
+            $request = $this->extractDtoStructure($requestDto);
+            $response = $this->extractDtoStructure($responseDto);
+
+            $body = [
+                'request' => $request,
+                'response' => $response,
             ];
+
+            $procedures[$procedureName] = array_merge($body, [
+                '_hash' => md5(json_encode($body)),
+            ]);
         }
 
-        $hash = md5(json_encode($metadata));
-
         $final = [
-            '_hash' => $hash,
-            'procedures' => $metadata,
+            '_generated_at' => now()->toIso8601String(),
+            'procedures' => $procedures,
         ];
 
-        $outputPath = $internalPath.'/.metadata.json';
+        $outputPath = $internalPath . '/.metadata.json';
 
         if ($this->option('dry-run')) {
             $this->info('Metadata generated:');
@@ -69,6 +73,10 @@ class LRPCBuildMeta extends Command
         $props = [];
 
         foreach ($ref->getProperties() as $prop) {
+            if ($prop->getDeclaringClass()->getName() !== $dtoClass) {
+                continue;
+            }
+
             $type = $prop->getType();
 
             if (! $type instanceof ReflectionNamedType) {

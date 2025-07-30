@@ -2,7 +2,7 @@
 
 namespace {{ namespace }};
 
-use ArffSaad\Lrpc\Support\BaseProcedure;
+use ArffSaad\LRPC\Support\BaseProcedure;
 use {{ namespace }}\Data\{{ class }}Request;
 use {{ namespace }}\Data\{{ class }}Response;
 use Spatie\LaravelData\Data;
