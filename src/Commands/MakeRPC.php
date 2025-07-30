@@ -37,6 +37,7 @@ class MakeRPC extends Command
         $this->generateFromStub(__DIR__.'/../../stubs/internal.stub', $procedureClass, [
             '{{ namespace }}' => $internalNamespace,
             '{{ class }}' => $name,
+            '{{ description }}' => $summary,
         ]);
 
         $this->generateFromStub(__DIR__.'/../../stubs/dto.stub', $requestClass, [
@@ -96,7 +97,7 @@ class MakeRPC extends Command
         $fields = [];
 
         while (true) {
-            $name = $this->ask('Parameter Name (Leave blank to finish)');
+            $name = $this->ask("$section Parameter Name (Leave blank to finish)");
             if (empty($name)) {
                 break;
             }

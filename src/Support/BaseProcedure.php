@@ -72,13 +72,9 @@ abstract class BaseProcedure
     /**
      * Handle an internal request. Useful to avoid coding twice for the same logic.
      */
-    public static function handle(array $payload): Data
+    public static function handle(Data $request): Data
     {
-        $requestClass = static::requestType();
         $responseClass = static::responseType();
-
-        /** @var Data $request */
-        $request = $requestClass::from($payload);
 
         /** @var Data $response */
         $response = static::process($request);
