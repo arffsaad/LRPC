@@ -38,7 +38,7 @@ class {{ class }} extends BaseProcedure
         );
     }
 
-    protected static function exec({{ class }}Request $request): {{ class }}Response
+    public static function exec({{ class }}Request $request): {{ class }}Response
     {
         return $this->handle($request);
     }

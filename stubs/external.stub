@@ -27,7 +27,7 @@ class {{ class }} extends BaseProcedure
         return {{ class }}Response::class;
     }
 
-    protected static function exec({{ class }}Request $request): {{ class }}Response
+    public static function exec({{ class }}Request $request): {{ class }}Response
     {
         return $this->call($request);
     }
