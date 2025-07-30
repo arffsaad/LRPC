@@ -4,13 +4,14 @@ namespace ArffSaad\LRPC\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionNamedType;
-use Illuminate\Support\Str;
 
 class LRPCBuildMeta extends Command
 {
     protected $signature = 'lrpc:build-meta {--dry-run}';
+
     protected $description = 'Build metadata file for all internal LRPC procedures';
 
     public function handle()
@@ -21,12 +22,16 @@ class LRPCBuildMeta extends Command
         $metadata = [];
 
         foreach (File::allFiles($internalPath) as $file) {
-            $className = $internalNamespace . '\\' . $file->getBasename('.php');
+            $className = $internalNamespace.'\\'.$file->getBasename('.php');
 
-            if (!class_exists($className)) continue;
+            if (! class_exists($className)) {
+                continue;
+            }
 
             $ref = new ReflectionClass($className);
-            if (!$ref->isSubclassOf(\ArffSaad\LRPC\Support\BaseProcedure::class)) continue;
+            if (! $ref->isSubclassOf(\ArffSaad\LRPC\Support\BaseProcedure::class)) {
+                continue;
+            }
 
             $instance = app($className);
             $procedureName = $ref->getShortName();
@@ -47,10 +52,10 @@ class LRPCBuildMeta extends Command
             'procedures' => $metadata,
         ];
 
-        $outputPath = $internalPath . '/.metadata.json';
+        $outputPath = $internalPath.'/.metadata.json';
 
         if ($this->option('dry-run')) {
-            $this->info("Metadata generated:");
+            $this->info('Metadata generated:');
             $this->info(json_encode($final, JSON_PRETTY_PRINT));
         } else {
             File::put($outputPath, json_encode($final, JSON_PRETTY_PRINT));
@@ -66,7 +71,9 @@ class LRPCBuildMeta extends Command
         foreach ($ref->getProperties() as $prop) {
             $type = $prop->getType();
 
-            if (!$type instanceof ReflectionNamedType) continue;
+            if (! $type instanceof ReflectionNamedType) {
+                continue;
+            }
 
             $props[$prop->getName()] = [
                 'type' => $type->getName(),
