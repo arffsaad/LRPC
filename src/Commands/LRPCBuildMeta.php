@@ -10,6 +10,7 @@ use ReflectionNamedType;
 class LRPCBuildMeta extends Command
 {
     protected $signature = 'lrpc:build-meta {--dry-run}';
+
     protected $description = 'Build metadata file for all internal LRPC procedures';
 
     public function handle()
@@ -22,7 +23,7 @@ class LRPCBuildMeta extends Command
         $this->info("Scanning for procedures in: {$internalPath}");
 
         foreach (File::files($internalPath) as $file) {
-            $className = $internalNamespace . '\\' . $file->getBasename('.php');
+            $className = $internalNamespace.'\\'.$file->getBasename('.php');
             if (! class_exists($className)) {
                 continue;
             }
@@ -56,7 +57,7 @@ class LRPCBuildMeta extends Command
             'procedures' => $procedures,
         ];
 
-        $outputPath = $internalPath . '/.metadata.json';
+        $outputPath = $internalPath.'/.metadata.json';
 
         if ($this->option('dry-run')) {
             $this->info('Metadata generated:');
