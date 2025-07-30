@@ -9,11 +9,12 @@ use Illuminate\Support\Str;
 class MakeRPC extends Command
 {
     protected $signature = 'make:lrpc {name?}';
+
     protected $description = 'Generate a new local LRPC procedure with typed DTOs';
 
     public function handle()
     {
-        $name = Str::studly($this->argument('name') ?? $this->ask("Enter the name of the procedure (in PascalCase e.g GetUser, MyProcedure etc)"));
+        $name = Str::studly($this->argument('name') ?? $this->ask('Enter the name of the procedure (in PascalCase e.g GetUser, MyProcedure etc)'));
         $summary = $this->ask("Enter a short summary for '$name'");
 
         $requestFields = $this->collectFields('request');
@@ -52,9 +53,9 @@ class MakeRPC extends Command
 
         $this->info("✅ Procedure '$name' generated!");
         $this->line("Summary: $summary");
-        $this->line("Request fields:");
+        $this->line('Request fields:');
         $this->displayFields($requestFields);
-        $this->line("Response fields:");
+        $this->line('Response fields:');
         $this->displayFields($responseFields);
     }
 
@@ -67,15 +68,18 @@ class MakeRPC extends Command
         while (true) {
             $input = $this->ask("$type param");
 
-            if (empty($input)) break;
+            if (empty($input)) {
+                break;
+            }
 
             $parts = explode(':', $input);
             $field = $parts[0] ?? null;
             $datatype = $parts[1] ?? null;
             $nullable = isset($parts[2]) && $parts[2] === 'nullable';
 
-            if (!$field || !$datatype) {
-                $this->error("Invalid format. Use: name:type[:nullable]");
+            if (! $field || ! $datatype) {
+                $this->error('Invalid format. Use: name:type[:nullable]');
+
                 continue;
             }
 

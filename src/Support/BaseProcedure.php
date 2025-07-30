@@ -2,9 +2,9 @@
 
 namespace ArffSaad\LRPC\Support;
 
-use Spatie\LaravelData\Data;
-use JsonRPC\Client as RPCClient;
 use Illuminate\Support\Facades\Http;
+use JsonRPC\Client as RPCClient;
+use Spatie\LaravelData\Data;
 
 abstract class BaseProcedure
 {
@@ -28,7 +28,7 @@ abstract class BaseProcedure
      * @template TRequest of Data
      * @template TResponse of Data
      *
-     * @param TRequest $request
+     * @param  TRequest  $request
      * @return TResponse
      */
     public static function call(Data $request): Data
@@ -52,7 +52,7 @@ abstract class BaseProcedure
                 'Content-Type' => 'application/json',
             ]);
 
-            if ($authHeader && $authHeader !== "") {
+            if ($authHeader && $authHeader !== '') {
                 $req = $req->withHeaders([
                     'Authorization' => $authHeader,
                 ]);
@@ -71,9 +71,6 @@ abstract class BaseProcedure
 
     /**
      * Handle an internal request. Useful to avoid coding twice for the same logic.
-     *
-     * @param array $payload
-     * @return Data
      */
     public static function handle(array $payload): Data
     {
@@ -97,9 +94,6 @@ abstract class BaseProcedure
 
     /**
      * Internal logic that executes on the provider service.
-     *
-     * @param Data $request
-     * @return Data
      */
     abstract protected static function process(Data $request): Data;
 
