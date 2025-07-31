@@ -21,7 +21,8 @@ class LRPCServiceProvider extends PackageServiceProvider
                 MakeRPC::class,
                 LRPCBuildMeta::class,
                 LRPCGitIgnore::class,
-            ]);
+            ])
+            ->hasRoute('lrpc');
     }
 
     public function register(): void
